@@ -58,7 +58,7 @@
                                     class="flex-shrink-0 flex items-center px-4">
                                     <img
                                         class="h-16 w-auto"
-                                        src="https://i.imgur.com/4329YFH.jpg"
+                                        :src="asset('images/logo.gif')"
                                         alt="Homexe"
                                         style="border-radius: 20px" />
                                 </div>
@@ -134,7 +134,7 @@
                     <div class="flex items-center flex-shrink-0 px-6">
                         <img
                             class="h-16 w-auto"
-                            src="https://i.imgur.com/4329YFH.jpg"
+                            :src="asset('images/logo.gif')"
                             alt="Homexe"
                             style="border-radius: 20px" />
                     </div>

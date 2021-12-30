@@ -22,4 +22,6 @@ yarn-error.log
 .DS_STORE
 _ide_helper.php
 _ide_helper_models.php
-.phpstorm.meta.php
+.phpstorm.meta.php.vapor/
+.env.production
+.env.staging

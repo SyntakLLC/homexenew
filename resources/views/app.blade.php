@@ -4,17 +4,28 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
-
+        <title inertia>{{ config('app.name', 'Homexe') }}</title>
+        
+        <link rel="apple-touch-icon" sizes="180x180" :href="asset('apple-touch-icon.png?v=1')">
+        <link rel="icon" type="image/png" sizes="32x32" :href="asset('favicon-32x32.png?v=1')">
+        <link rel="icon" type="image/png" sizes="16x16" :href="asset('favicon-16x16.png?v=1')">
+        <link rel="manifest" :href="asset('site.webmanifest?v=1')">
+        <link rel="mask-icon" :href="asset('safari-pinned-tab.svg?v=1')" color="#1470c3">
+        <link rel="shortcut icon" :href="asset('favicon.ico?v=1')">
+        <meta name="apple-mobile-web-app-title" content="Homexe">
+        <meta name="application-name" content="Homexe">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="theme-color" content="#ffffff">
+        
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
         @routes
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
         @inertia

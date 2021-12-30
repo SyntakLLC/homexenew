@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use BinaryCabin\LaravelUUID\Traits\HasUUID;
+use App\Traits\UsesUuidKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,9 +11,12 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin IdeHelperListing
+ */
 class Listing extends Model
 {
-    use HasUUID;
+    use UsesUuidKey;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
