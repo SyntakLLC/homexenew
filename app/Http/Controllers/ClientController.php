@@ -35,7 +35,7 @@ class ClientController extends Controller
         return Inertia::render('Clients/Create');
     }
 
-    public function updateClient(Request $request)
+    public function update(Request $request)
     {
         $client = Client::find($request->clientId);
 
@@ -51,7 +51,7 @@ class ClientController extends Controller
         return Redirect::route('client.index');
     }
 
-    public function createClient(Request $request)
+    public function store(Request $request)
     {
         $client = Client::create([
             'user_id' => $request->userId,

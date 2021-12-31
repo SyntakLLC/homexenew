@@ -32,9 +32,18 @@
         "@headlessui/vue": "^1.4.2",
         "@heroicons/vue": "^1.0.5",
         "@prettier/plugin-php": "^0.17.6",
+        "@tailwindcss/aspect-ratio": "^0.4.0",
+        "@tailwindcss/line-clamp": "^0.3.0",
+        "@vuelidate/core": "^2.0.0-alpha.24",
+        "@vuelidate/validators": "^2.0.0-alpha.21",
         "chart.js": "^3.7.0",
+        "maska": "^1.4.5",
         "moment": "^2.29.1",
+        "node-sass": "^7.0.1",
         "prettier": "^2.5.1",
-        "vue-chart-3": "^3.0.4"
+        "sass-loader": "^12.4.0",
+        "v-calendar": "^3.0.0-alpha.6",
+        "vue-chart-3": "^3.0.4",
+        "vue-google-autocomplete": "^1.1.2"
     }
 }

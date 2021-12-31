@@ -20,9 +20,9 @@
                     aria-hidden="true">
                     <slot name="svg_path" />
                 </svg>
-                <inertia-link href="#" class="inline-flex">
+                <Link href="#" class="inline-flex">
                     {{ this.text }}
-                </inertia-link>
+                </Link>
             </div>
         </a>
         <a
@@ -43,18 +43,23 @@
                     stroke="currentColor">
                     <slot name="svg_path" />
                 </svg>
-                <inertia-link href="#" class="inline-flex">
+                <Link href="#" class="inline-flex">
                     {{ this.text }}
-                </inertia-link>
+                </Link>
             </div>
         </a>
     </div>
 </template>
 
 <script>
+    import { Link } from '@inertiajs/inertia-vue3';
+
     export default {
         name: 'SidebarItem',
         props: ['text', 'href'],
+        components: {
+            Link,
+        },
     };
 </script>
 

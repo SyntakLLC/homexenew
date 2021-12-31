@@ -12,7 +12,7 @@
             </div>
             <div class="py-0 px-8">
                 <div class="text-2xl font-semibold leading-0 flex flex-col">
-                    <span class="">{{ this.address }}</span>
+                    <span class="">{{ this.address.street1 }}</span>
                     <div class="block pt-2">
                         <span
                             class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium"

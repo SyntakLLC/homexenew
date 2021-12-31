@@ -35,7 +35,7 @@
                             :address="listing.address"
                             button-text="Edit"
                             :button-link="
-                                this.route('listing.edit', listing)
+                                this.route('listing.edit', listing.uuid)
                             " />
                     </div>
                 </div>

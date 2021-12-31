@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CallController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,53 +21,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class);
 
-Route::get(
-    'appointment/get',
-    'App\Http\Controllers\AppointmentController@get',
-)->name('appointment.get');
+// Route::get(
+//     'appointment/get',
+//     'App\Http\Controllers\AppointmentController@get',
+// )->name('appointment.get');
 
-Route::get('call/get', 'App\Http\Controllers\CallController@get')->name(
-    'call.get',
-);
+// Route::get('call/get', [CallController::class, 'index'])->name('call.get');
+//
+// Route::get('listing/get', [ListingController::class, 'index'])->name(
+//     'listing.get',
+// );
 
-Route::get('listing/get', 'App\Http\Controllers\ListingController@get')->name(
-    'listing.get',
-);
-
-Route::get('client/get', 'App\Http\Controllers\ClientController@get')->name(
-    'client.get',
-);
+// Route::get('client/get', 'App\Http\Controllers\ClientController@get')->name(
+//     'client.get',
+// );
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', 'App\Http\Controllers\Controller@dashboard')->name(
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name(
         'dashboard',
     );
-    Route::post(
-        'create-listing',
-        'App\Http\Controllers\ListingController@createListing',
-    );
 
-    Route::post(
-        'update-listing',
-        'App\Http\Controllers\ListingController@updateListing',
-    );
+    Route::resource('appointment', AppointmentController::class);
 
-    Route::post(
-        'create-client',
-        'App\Http\Controllers\ClientController@createClient',
-    );
+    Route::resource('listing', ListingController::class);
 
-    Route::post(
-        'update-client',
-        'App\Http\Controllers\ClientController@updateClient',
-    );
-
-    Route::resource(
-        'appointment',
-        'App\Http\Controllers\AppointmentController',
-    );
-
-    Route::resource('listing', 'App\Http\Controllers\ListingController');
-
-    Route::resource('client', 'App\Http\Controllers\ClientController');
+    Route::resource('client', ClientController::class);
 });

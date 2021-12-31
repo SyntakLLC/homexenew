@@ -23,6 +23,10 @@ class Listing extends Model
     use Notifiable;
     use TwoFactorAuthenticatable;
     use SoftDeletes;
+    
+    public function address() {
+        return $this->morphOne(Address::class, 'addressable', 'addressable_type', 'addressable_id', 'uuid');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -32,14 +36,8 @@ class Listing extends Model
     protected $fillable = [
         'user_id',
         'user_name',
-        'address',
         'price',
         'status',
         'date',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
 }

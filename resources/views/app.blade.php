@@ -17,6 +17,8 @@
         <meta name="msapplication-TileColor" content="#2d89ef">
         <meta name="theme-color" content="#ffffff">
         
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_autocomplete') }}&libraries=places"></script>
+        
         <!-- Fonts -->
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
