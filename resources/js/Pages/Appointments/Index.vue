@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Appointments">
+    <app-layout>
         <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">

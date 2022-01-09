@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Dashboard">
+    <app-layout>
         <div class="px-4">
             <div class="mt-12 mb-12 flex-col">
                 <span
@@ -15,6 +15,9 @@
                     }}</span
                 >
             </div>
+
+            <!--             <h2>Chart data</h2>
+            {{ this.returnChartData() }} -->
 
             <LineChart
                 :datasets="this.returnChartData()"
@@ -180,42 +183,40 @@
             // returns an array of chart data
             returnChartData() {
                 var array = [];
-                let colors = [
-                    '#1470C450',
-                    '#FDE68A50',
-                    '#A7F3D050',
-                    '#DDD6FE50',
-                    '#FECACA50',
-                    '#E5E7EB50',
-                ];
-
-                for (let i = 0; i < this.users.length; i++) {
-                    var color = colors[i];
-                    while (i > colors.length) {
-                        color = colors[i - colors.length];
-                    }
-
-                    array = array.concat({
-                        // label: this.users[i].name,
-                        // fill: false,
-                        // lineTension: 0,
-                        backgroundColor: color,
-                        data: [
-                            this.returnExpectedIncome(11, this.user),
-                            this.returnExpectedIncome(10, this.user),
-                            this.returnExpectedIncome(9, this.user),
-                            this.returnExpectedIncome(8, this.user),
-                            this.returnExpectedIncome(7, this.user),
-                            this.returnExpectedIncome(6, this.user),
-                            this.returnExpectedIncome(5, this.user),
-                            this.returnExpectedIncome(4, this.user),
-                            this.returnExpectedIncome(3, this.user),
-                            this.returnExpectedIncome(2, this.user),
-                            this.returnExpectedIncome(1, this.user),
-                            this.returnExpectedIncome(0, this.user),
-                        ],
-                    });
-                }
+                let color = '#1470C450';
+                console.log(this.user.name + ' (EXPECTED INCOME)');
+                console.log(this.returnExpectedIncome(11, this.user));
+                console.log(this.returnExpectedIncome(10, this.user));
+                console.log(this.returnExpectedIncome(9, this.user));
+                console.log(this.returnExpectedIncome(8, this.user));
+                console.log(this.returnExpectedIncome(7, this.user));
+                console.log(this.returnExpectedIncome(6, this.user));
+                console.log(this.returnExpectedIncome(5, this.user));
+                console.log(this.returnExpectedIncome(4, this.user));
+                console.log(this.returnExpectedIncome(3, this.user));
+                console.log(this.returnExpectedIncome(2, this.user));
+                console.log(this.returnExpectedIncome(1, this.user));
+                console.log(this.returnExpectedIncome(0, this.user));
+                array = array.concat({
+                    // label: this.users[i].name,
+                    // fill: false,
+                    // lineTension: 0,
+                    backgroundColor: color,
+                    data: [
+                        this.returnExpectedIncome(11, this.user),
+                        this.returnExpectedIncome(10, this.user),
+                        this.returnExpectedIncome(9, this.user),
+                        this.returnExpectedIncome(8, this.user),
+                        this.returnExpectedIncome(7, this.user),
+                        this.returnExpectedIncome(6, this.user),
+                        this.returnExpectedIncome(5, this.user),
+                        this.returnExpectedIncome(4, this.user),
+                        this.returnExpectedIncome(3, this.user),
+                        this.returnExpectedIncome(2, this.user),
+                        this.returnExpectedIncome(1, this.user),
+                        this.returnExpectedIncome(0, this.user),
+                    ],
+                });
                 return array;
             },
 
@@ -235,7 +236,7 @@
             // calculates the user's average daily call count
             returnDailyCallCount(month, user) {
                 let now = moment().subtract(month, 'months');
-                console.log(now.format('MM DD YYYY'));
+
                 let your_date = moment('2021-11-28');
                 let num_of_days = now.diff(your_date, 'days') + 1;
 

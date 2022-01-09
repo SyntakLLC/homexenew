@@ -132,9 +132,14 @@
                     class="flex flex-col w-64 border-gray-200 pt-5 pb-4 bg-gray-100"
                     style="background-color: #f9f9f9">
                     <div class="flex items-center flex-shrink-0 px-6">
-                        <img
+                        <!--                         <img
                             class="h-16 w-auto"
                             :src="asset('images/logo.gif')"
+                            alt="Homexe"
+                            style="border-radius: 20px" /> -->
+                        <img
+                            class="h-16 w-auto"
+                            src="https://i.imgur.com/obvXOnI.gif"
                             alt="Homexe"
                             style="border-radius: 20px" />
                     </div>

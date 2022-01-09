@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 class CallController extends Controller
 {
-    public function index(Request $request)
+    public function get(Request $request)
     {
         return Call::all();
     }

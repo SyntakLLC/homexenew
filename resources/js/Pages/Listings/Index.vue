@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Listings">
+    <app-layout>
         <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
@@ -9,11 +9,15 @@
                     </h2>
                 </div>
                 <div class="mt-4 flex md:mt-0 md:ml-4">
-                    <button
+                    <!--                     <button
                         type="button"
-                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                        <a :href="route('listing.create')">New</a>
-                    </button>
+                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-400 hover:bg-brand-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-400"> -->
+                    <a
+                        :href="route('listing.create')"
+                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-400 hover:bg-brand-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-400"
+                        >New</a
+                    >
+                    <!--                     </button> -->
                 </div>
             </div>
 

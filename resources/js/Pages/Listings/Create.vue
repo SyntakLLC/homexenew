@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Listings">
+    <app-layout>
         <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
@@ -72,7 +72,7 @@
                                                         label: 'Sold',
                                                     },
                                                 ]" />
-                                                
+
                                             <address-input
                                                 class="col-span-6"
                                                 :disabled="loading"
@@ -141,7 +141,7 @@
                         longitude: '',
                     },
                     price: null,
-                    date: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
+                    date: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
                     status: 'Active',
                     userId: this.user.id,
                     userName: this.user.name,

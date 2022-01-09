@@ -35,7 +35,7 @@
                                 <div class="ml-4 flex-shrink-0 flex">
                                     <button
                                         @click="show = false"
-                                        class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                                         <span class="sr-only">Close</span>
                                         <XIcon
                                             class="h-5 w-5"
@@ -54,7 +54,7 @@
             <div class="px-4">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-10 w-10 p-2 bg-primary rounded-full self-center text-white"
+                    class="h-10 w-10 p-2 bg-brand-400 rounded-full self-center text-white"
                     viewBox="0 0 20 20"
                     fill="currentColor">
                     <path
@@ -88,9 +88,7 @@
                             <MailIcon
                                 class="w-5 h-5 text-gray-400"
                                 aria-hidden="true" />
-                            <span
-                                @click="copyEmail"
-                                class="ml-3 p-2 cursor-pointer truncate hover:bg-gray-100 hover:rounded-lg">
+                            <span class="ml-3 p-2 cursor-pointer truncate">
                                 {{ this.email }}
                             </span>
                         </a>
@@ -101,9 +99,7 @@
                             <PhoneIcon
                                 class="w-5 h-5 text-gray-400"
                                 aria-hidden="true" />
-                            <span
-                                @click="copyPhone"
-                                class="ml-3 p-2 cursor-pointer truncate hover:bg-gray-100 hover:rounded-lg">
+                            <span class="ml-3 p-2 cursor-pointer truncate">
                                 {{ this.phone }}
                             </span>
                         </a>
@@ -157,23 +153,6 @@
             return {
                 showCopyNotification: false,
             };
-        },
-
-        methods: {
-            copyEmail() {
-                navigator.clipboard.writeText(this.email);
-                this.showCopyNotification = true;
-                setTimeout(() => {
-                    this.showCopyNotification = false;
-                }, 3000);
-            },
-            copyPhone() {
-                navigator.clipboard.writeText(this.phone);
-                this.showCopyNotification = true;
-                setTimeout(() => {
-                    this.showCopyNotification = false;
-                }, 3000);
-            },
         },
     };
 </script>

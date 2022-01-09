@@ -54,10 +54,10 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $client = Client::create([
-            'user_id' => $request->userId,
-            'user_name' => $request->userName,
+            'user_id' => auth()->user()->id,
+            'user_name' => auth()->user()->name,
             'name' => $request->name,
-            'phone' => $request->phone,
+            'phone' => $request->phoneNumber,
             'email' => $request->email,
             'status' => $request->status,
             'client_type' => $request->clientType,
@@ -70,5 +70,22 @@ class ClientController extends Controller
     public function get(Request $request)
     {
         return Client::all();
+    }
+
+    public function updateClient(Request $request)
+    {
+        // dd('fhfhfhf');
+        //         $client = Client::find($request->clientId);
+        //
+        //         $client->name = $request->name;
+        //         $client->phone = $request->phone;
+        //         $client->email = $request->email;
+        //         $client->status = $request->status;
+        //         $client->client_type = $request->clientType;
+        //         $client->gci = $request->gci;
+        //
+        //         $client->save();
+
+        return Redirect::route('client.index');
     }
 }

@@ -21,20 +21,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class);
 
-// Route::get(
-//     'appointment/get',
-//     'App\Http\Controllers\AppointmentController@get',
-// )->name('appointment.get');
+Route::get('appointment/get', [AppointmentController::class, 'get'])->name(
+    'appointment.get',
+);
 
-// Route::get('call/get', [CallController::class, 'index'])->name('call.get');
-//
-// Route::get('listing/get', [ListingController::class, 'index'])->name(
-//     'listing.get',
-// );
+Route::get('call/get', [CallController::class, 'get'])->name('call.get');
 
-// Route::get('client/get', 'App\Http\Controllers\ClientController@get')->name(
-//     'client.get',
-// );
+Route::get('listing/get', [ListingController::class, 'get'])->name(
+    'listing.get',
+);
+
+Route::get('client/get', [ClientController::class, 'get'])->name('client.get');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name(
@@ -46,4 +43,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('listing', ListingController::class);
 
     Route::resource('client', ClientController::class);
+
+    Route::post(
+        'update-listing',
+        'App\Http\Controllers\ListingController@updateListing',
+    );
+
+    Route::post(
+        'update-client',
+        'App\Http\Controllers\ClientController@updateClient',
+    );
 });

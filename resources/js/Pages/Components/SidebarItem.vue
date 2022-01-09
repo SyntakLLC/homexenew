@@ -20,9 +20,9 @@
                     aria-hidden="true">
                     <slot name="svg_path" />
                 </svg>
-                <Link href="#" class="inline-flex">
+                <p class="inline-flex">
                     {{ this.text }}
-                </Link>
+                </p>
             </div>
         </a>
         <a
@@ -43,9 +43,9 @@
                     stroke="currentColor">
                     <slot name="svg_path" />
                 </svg>
-                <Link href="#" class="inline-flex">
+                <p class="inline-flex">
                     {{ this.text }}
-                </Link>
+                </p>
             </div>
         </a>
     </div>

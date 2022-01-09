@@ -1,11 +1,11 @@
 <template>
-    <app-layout title="Listings">
+    <app-layout>
         <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
                     <h2
                         class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                        {{ this.listing.address }}
+                        {{ this.listing.address.street1 }}
                     </h2>
                 </div>
             </div>
@@ -24,106 +24,141 @@
                         </div>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
-                        <form
-                            @submit.prevent="
-                                updateListingForm.post('/update-listing')
-                            ">
-                            <div class="shadow overflow-hidden sm:rounded-md">
-                                <div class="px-4 py-5 bg-white sm:p-6">
-                                    <div class="grid grid-cols-6 gap-6">
-                                        <div class="col-span-6">
-                                            <label
-                                                for="street-address"
-                                                class="block text-sm font-medium text-gray-700"
-                                                >Street address</label
-                                            >
-                                            <input
-                                                v-model="
-                                                    updateListingForm.address
-                                                "
-                                                type="text"
-                                                name="street-address"
-                                                id="street-address"
-                                                autocomplete="street-address"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label
-                                                for="price"
-                                                class="block text-sm font-medium text-gray-700">
-                                                Price
-                                            </label>
+                        <div class="shadow overflow-hidden sm:rounded-md">
+                            <div class="bg-white">
+                                <form-helper
+                                    :data="form"
+                                    :submit="submit"
+                                    :validations="validations">
+                                    <template v-slot="{ loading, v$ }">
+                                        <div
+                                            class="grid grid-cols-6 gap-6 mb-6 px-4 py-5 sm:p-6">
+                                            <input-group
+                                                class="col-span-6 sm:col-span-2"
+                                                :disabled="loading"
+                                                id="price"
+                                                v-model="form.price"
+                                                placeholder="0.00"
+                                                :mask="'#*.##'"
+                                                label="Price"
+                                                :validator="v$.form.price" />
+
+                                            <date-picker
+                                                class="col-span-6 sm:col-span-2"
+                                                :disabled="loading"
+                                                v-model="form.date"
+                                                id="date"
+                                                label="Listing Date"
+                                                :validator="v$.form.date" />
+
+                                            <select-group
+                                                class="col-span-6 sm:col-span-2"
+                                                :disabled="loading"
+                                                v-model="form.status"
+                                                id="status"
+                                                label="Status"
+                                                :validator="v$.form.status"
+                                                :options="[
+                                                    {
+                                                        value: 'Active',
+                                                        label: 'Active',
+                                                    },
+                                                    {
+                                                        value: 'Pending',
+                                                        label: 'Pending',
+                                                    },
+                                                    {
+                                                        value: 'Sold',
+                                                        label: 'Sold',
+                                                    },
+                                                ]" />
+
+                                            <div class="col-span-6">
+                                                <input-group
+                                                    id="address-street1'"
+                                                    :validator="$v"
+                                                    label="Address line 1"
+                                                    :disabled="loading"
+                                                    v-model="
+                                                        form.address.street1
+                                                    " />
+                                            </div>
+
+                                            <div class="col-span-6">
+                                                <input-group
+                                                    id="address-street2'"
+                                                    :validator="$v"
+                                                    label="Address line 2"
+                                                    corner-hint="Optional"
+                                                    :disabled="loading"
+                                                    v-model="
+                                                        form.address.street2
+                                                    " />
+                                            </div>
 
                                             <div
-                                                class="mt-1 flex rounded-md shadow-sm">
-                                                <span
-                                                    class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                                                    $
-                                                </span>
-                                                <input
+                                                class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                                <input-group
+                                                    id="address-city'"
+                                                    :validator="$v"
+                                                    label="City"
+                                                    :disabled="loading"
                                                     v-model="
-                                                        updateListingForm.price
+                                                        form.address.city
+                                                    " />
+                                            </div>
+
+                                            <div
+                                                class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                                <select-group
+                                                    id="address-state'"
+                                                    :validator="$v"
+                                                    v-model="form.address.state"
+                                                    v-if="
+                                                        form.address.country ===
+                                                        'US'
                                                     "
-                                                    type="number"
-                                                    name="price"
-                                                    id="price"
-                                                    class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-primary focus:border-primary sm:text-sm border-gray-300"
-                                                    placeholder="www.example.com" />
+                                                    label="State"
+                                                    :disabled="loading"
+                                                    :options="statesOptions" />
+
+                                                <input-group
+                                                    id="address-state'"
+                                                    label="State/Province"
+                                                    v-if="
+                                                        form.address.country !==
+                                                        'US'
+                                                    "
+                                                    :validator="$v"
+                                                    v-model="form.address.state"
+                                                    :disabled="loading" />
+                                            </div>
+
+                                            <div
+                                                class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                                <input-group
+                                                    id="address-zip'"
+                                                    :validator="$v"
+                                                    :disabled="loading"
+                                                    label="Postal code"
+                                                    :mask="'#####'"
+                                                    v-model="
+                                                        form.address.postal_code
+                                                    " />
                                             </div>
                                         </div>
-
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label
-                                                for="date"
-                                                class="block text-sm font-medium text-gray-700">
-                                                Listing Date
-                                            </label>
-                                            <input
-                                                v-model="updateListingForm.date"
-                                                type="date"
-                                                name="date"
-                                                id="date"
-                                                autocomplete="family-name"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                        <div
+                                            class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                            <button-component
+                                                color="primary"
+                                                type="submit"
+                                                :loading="loading"
+                                                text="Update" />
                                         </div>
-
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label
-                                                for="status"
-                                                class="block text-sm font-medium text-gray-700">
-                                                Status
-                                            </label>
-                                            <select
-                                                v-model="
-                                                    updateListingForm.status
-                                                "
-                                                id="status"
-                                                name="status"
-                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                                                <option>Active</option>
-                                                <option>Pending</option>
-                                                <option>Sold</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                    <button
-                                        type="submit"
-                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                        {{
-                                            updateListingForm.recentlySuccessful
-                                                ? 'Updated'
-                                                : updateListingForm.processing
-                                                ? 'Updating...'
-                                                : 'Update'
-                                        }}
-                                    </button>
-                                </div>
+                                    </template>
+                                </form-helper>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,20 +170,104 @@
     import AppLayout from '../../Layouts/AppLayout';
     import ListingCard from '../Components/ListingCard';
     import moment from 'moment';
+    import FormHelper from '@/Components/utils/FormHelper';
+    import AddressInput from '@/Components/ui/AddressInput/AddressInput';
+
+    import InputGroup from '@/Components/ui/InputGroup/InputGroup';
+    import ButtonComponent from '@/Components/ui/Button/ButtonComponent';
+    import DatePicker from '@/Components/ui/DatePicker/DateInput';
+    import SelectGroup from '@/Components/ui/Select/SelectGroup';
+
+    import { helpers, required, maxLength } from '@vuelidate/validators';
+
     export default {
-        name: 'Edit',
-        components: { ListingCard, AppLayout },
+        name: 'Create',
+        components: {
+            ListingCard,
+            AppLayout,
+            FormHelper,
+            InputGroup,
+            ButtonComponent,
+            DatePicker,
+            SelectGroup,
+            AddressInput,
+        },
         props: ['user', 'listing'],
         data() {
             return {
-                updateListingForm: this.$inertia.form({
-                    address: this.listing.address,
+                form: {
+                    address: {
+                        street1: this.listing.address.street1,
+                        street2: this.listing.address.street2,
+                        city: this.listing.address.city,
+                        state: this.listing.address.state,
+                        postal_code: this.listing.address.postal_code,
+                        country: this.listing.address.country,
+                        latitude: this.listing.address.latitude,
+                        longitude: this.listing.address.longitude,
+                    },
                     price: this.listing.price,
                     date: this.listing.date,
                     status: this.listing.status,
-                    listingId: this.listing.id,
-                }),
+                    listingUuid: this.listing.uuid,
+                },
+                validations: {
+                    form: {
+                        'address.street1': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        'address.street2': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        'address.city': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        'address.state': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        'address.postal_code': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        'address.country': {
+                            maxLength: helpers.withMessage(
+                                'This field cannot exceed 255 characters',
+                                maxLength(255),
+                            ),
+                        },
+                        price: {
+                            required: helpers.withMessage(
+                                'This field is required',
+                                required,
+                            ),
+                        },
+                        date: {},
+                        status: {},
+                    },
+                },
             };
+        },
+        methods: {
+            submit() {
+                this.$inertia.put(
+                    this.route('listing.update', this.listing.uuid),
+                    this.form,
+                );
+            },
         },
     };
 </script>

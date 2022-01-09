@@ -13,58 +13,84 @@ class ListingController extends Controller
 {
     public function index(Request $request)
     {
-        $listings = collect(Listing::with('address')->get())->map(function($listing) {
+        $listings = collect(Listing::with('address')->get())->map(function (
+            $listing,
+        ) {
             return [
                 'uuid' => $listing->uuid,
                 'price' => $listing->price,
                 'status' => $listing->status,
                 'date' => $listing->date,
                 'address' => [
-                   'street1' => $listing->address->street1,
-                   'street2' => $listing->address->street2,
-                   'city' => $listing->address->city,
-                   'state' => $listing->address->state,
-                   'postal_code' => $listing->address->postal_code,
-                ] 
+                    'street1' => $listing->address->street1,
+                    'street2' => $listing->address->street2,
+                    'city' => $listing->address->city,
+                    'state' => $listing->address->state,
+                    'postal_code' => $listing->address->postal_code,
+                ],
             ];
         });
-        
+
         return Inertia::render('Listings/Index', [
-            'listings' => $listings
+            'listings' => $listings,
         ]);
     }
 
     public function edit(Listing $listing)
     {
+        $new_listing = [
+            'id' => $listing->id,
+            'uuid' => $listing->uuid,
+            'price' => $listing->price,
+            'status' => $listing->status,
+            'date' => $listing->date,
+            'address' => [
+                'street1' => $listing->address->street1,
+                'street2' => $listing->address->street2,
+                'city' => $listing->address->city,
+                'state' => $listing->address->state,
+                'postal_code' => $listing->address->postal_code,
+            ],
+        ];
+
         return Inertia::render('Listings/Edit', [
-            'listing' => $listing,
+            'listing' => $new_listing,
         ]);
     }
 
     public function show(Listing $listing)
     {
-        return Inertia::render('Listings/Show', [
-            'listing' => $listing,
-        ]);
+        return Inertia::render('Dashboard');
     }
     public function create(Request $request)
     {
         return Inertia::render('Listings/Create', []);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Listing $listing)
     {
-        $listing = Listing::find($request->listingId);
+        // dd($listing);
+        // $listing->user_id = auth()->user()->id;
+        // $listing->user_name = auth()->user()->name;
+        // $listing->price = $request->input('price');
+        // $listing->status = $request->input('status');
+        // $listing->date = date(
+        //     'Y-m-d',
+        //     strtotime(str_replace('-', '/', $request->input('date'))),
+        // );
 
-        $listing->address = $request->address;
-        $listing->price = $request->price;
-        $listing->status = $request->status;
-        $listing->date = date(
-            'Y-m-d',
-            strtotime(str_replace('-', '/', $request->date)),
-        );
+        //         $listing->address()->create([
+        //             'street1' => $request->input('address.street1'),
+        //             'street2' => $request->input('address.street2'),
+        //             'city' => $request->input('address.city'),
+        //             'state' => $request->input('address.state'),
+        //             'postal_code' => $request->input('address.postal_code'),
+        //             'country' => $request->input('address.country'),
+        //             'latitude' => $request->input('address.latitude'),
+        //             'longitude' => $request->input('address.longitude'),
+        //         ]);
 
-        $listing->save();
+        // $listing->save();
 
         return Redirect::route('listing.index');
     }
@@ -87,9 +113,7 @@ class ListingController extends Controller
                 strtotime(str_replace('-', '/', $request->input('date'))),
             ),
         ]);
-        
-        var_dump($request->all());
-        
+
         $listing->address()->create([
             'street1' => $request->input('address.street1'),
             'street2' => $request->input('address.street2'),
@@ -100,12 +124,29 @@ class ListingController extends Controller
             'latitude' => $request->input('address.latitude'),
             'longitude' => $request->input('address.longitude'),
         ]);
-        
+
         return Redirect::route('listing.index');
     }
 
-    public function input(Request $request)
+    public function get(Request $request)
     {
         return Listing::all();
+    }
+
+    public function updateListing(Request $request)
+    {
+        dd(Listing::find(1));
+        //         $listing = Listing::find($request->listingId);
+        //         dd($listing);
+        //         $listing->price = $request->price;
+        //         $listing->status = $request->status;
+        //         $listing->date = date(
+        //             'Y-m-d',
+        //             strtotime(str_replace('-', '/', $request->date)),
+        //         );
+        //
+        //         $listing->save();
+
+        return Redirect::route('listing.index');
     }
 }

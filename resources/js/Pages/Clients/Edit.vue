@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Clients">
+    <app-layout>
         <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
@@ -43,7 +43,7 @@
                                                 name="first-name"
                                                 id="first-name"
                                                 autocomplete="given-name"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                class="mt-1 focus:ring-brand-400 focus:border-brand-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
 
                                         <div class="col-span-6 sm:col-span-3">
@@ -57,7 +57,7 @@
                                                 type="text"
                                                 name="phone"
                                                 id="phone"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                class="mt-1 focus:ring-brand-400 focus:border-brand-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
 
                                         <div class="col-span-6 sm:col-span-4">
@@ -72,7 +72,7 @@
                                                 name="email-address"
                                                 id="email-address"
                                                 autocomplete="email"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                class="mt-1 focus:ring-brand-400 focus:border-brand-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
 
                                         <div
@@ -88,7 +88,7 @@
                                                 name="city"
                                                 id="city"
                                                 autocomplete="address-level2"
-                                                class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                class="mt-1 focus:ring-brand-400 focus:border-brand-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
 
                                         <div
@@ -105,7 +105,7 @@
                                                 "
                                                 id="status"
                                                 name="status"
-                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-brand-400 focus:border-brand-400 sm:text-sm">
                                                 <option>Listing</option>
                                                 <option>Buyer</option>
                                             </select>
@@ -125,7 +125,7 @@
                                                 "
                                                 id="status"
                                                 name="status"
-                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-brand-400 focus:border-brand-400 sm:text-sm">
                                                 <option>Signed</option>
                                                 <option>Contract</option>
                                                 <option>Closed</option>
@@ -138,7 +138,7 @@
                                     class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                     <button
                                         type="submit"
-                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-400 hover:bg-brand-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-400">
                                         {{
                                             updateClientForm.recentlySuccessful
                                                 ? 'Updated'
@@ -166,7 +166,7 @@
         data() {
             return {
                 updateClientForm: this.$inertia.form({
-                    clientId: this.client.id,
+                    clientId: this.client.uuid,
                     name: this.client.name,
                     phone: this.client.phone,
                     email: this.client.email,
