@@ -15,12 +15,8 @@
                     }}</span
                 >
             </div>
-
-            <!--             <h2>Chart data</h2>
-            {{ this.returnChartData() }} -->
-
             <LineChart
-                :datasets="this.returnChartData()"
+                :datasets="returnChartData()"
                 :labels="returnMonthList()" />
 
             <div
@@ -103,23 +99,31 @@
             AppLayout,
         },
 
-        props: {
-            calls: {
-                default: [],
-                type: Array,
-            },
-            appointments: {
-                default: [],
-                type: Array,
-            },
-            users: {
-                default: [],
-                type: Array,
-            },
-            user: {
-                default: {},
-                type: Object,
-            },
+        props: ['propCalls', 'propAppts', 'users', 'user'],
+        // {
+        //     calls: {
+        //         default: [],
+        //         type: Array,
+        //     },
+        //     appointments: {
+        //         default: [],
+        //         type: Array,
+        //     },
+        //     users: {
+        //         default: [],
+        //         type: Array,
+        //     },
+        //     user: {
+        //         default: {},
+        //         type: Object,
+        //     },
+        // },
+
+        data() {
+            return {
+                calls: Object.values(this.propCalls),
+                appointments: Object.values(this.propAppts),
+            };
         },
 
         methods: {
@@ -137,34 +141,26 @@
             // # of appointment with 100% signed contract
             returnNumberOfSignedContracts() {
                 return this.appointments.filter(
-                    (appt) =>
-                        appt.odds_of_conversion === '1' &&
-                        appt.user_name == this.user.name,
+                    (appt) => appt.odds_of_conversion === '1',
                 ).length;
             },
 
             // gives THIS USER'S the number of X made today
             returnSetOfToday(set) {
                 return set.filter((item) => {
-                    return (
-                        item.user_name === this.user.name && this.wasToday(item)
-                    );
+                    return this.wasToday(item);
                 }).length;
             },
             // gives THIS USER'S the number of X made today
             returnSetOfWeek(set) {
                 return set.filter((item) => {
-                    return (
-                        item.user_name === this.user.name && this.wasWeek(item)
-                    );
+                    return this.wasWeek(item);
                 }).length;
             },
             // gives THIS USER'S the number of X made today
             returnSetOfMonth(set) {
                 return set.filter((item) => {
-                    return (
-                        item.user_name === this.user.name && this.wasMonth(item)
-                    );
+                    return this.wasMonth(item);
                 }).length;
             },
 
@@ -184,19 +180,6 @@
             returnChartData() {
                 var array = [];
                 let color = '#1470C450';
-                console.log(this.user.name + ' (EXPECTED INCOME)');
-                console.log(this.returnExpectedIncome(11, this.user));
-                console.log(this.returnExpectedIncome(10, this.user));
-                console.log(this.returnExpectedIncome(9, this.user));
-                console.log(this.returnExpectedIncome(8, this.user));
-                console.log(this.returnExpectedIncome(7, this.user));
-                console.log(this.returnExpectedIncome(6, this.user));
-                console.log(this.returnExpectedIncome(5, this.user));
-                console.log(this.returnExpectedIncome(4, this.user));
-                console.log(this.returnExpectedIncome(3, this.user));
-                console.log(this.returnExpectedIncome(2, this.user));
-                console.log(this.returnExpectedIncome(1, this.user));
-                console.log(this.returnExpectedIncome(0, this.user));
                 array = array.concat({
                     // label: this.users[i].name,
                     // fill: false,
@@ -243,10 +226,7 @@
                 try {
                     return Math.abs(
                         this.calls.filter((call) => {
-                            return (
-                                call.user_name === user.name &&
-                                moment(call.created_at).isBefore(now)
-                            );
+                            return moment(call.created_at).isBefore(now);
                         }).length / num_of_days,
                     );
                 } catch {
@@ -263,10 +243,7 @@
                 try {
                     return Math.abs(
                         this.appointments.filter((appt) => {
-                            return (
-                                appt.user_name === user.name &&
-                                moment(appt.created_at).isBefore(now)
-                            );
+                            return moment(appt.created_at).isBefore(now);
                         }).length / num_of_days,
                     );
                 } catch {
@@ -300,12 +277,8 @@
 
             // divides the calls by appointments, and if there are no appointments, returns 0
             returnConversionRate() {
-                let usersCalls = this.calls.filter(
-                    (call) => call.user_name === this.user.name,
-                ).length;
-                let usersAppts = this.appointments.filter(
-                    (appt) => appt.user_name === this.user.name,
-                ).length;
+                let usersCalls = this.calls.length;
+                let usersAppts = this.appointments.length;
                 if (usersAppts === 0) return 0;
 
                 var conversionRate = usersCalls / usersAppts;

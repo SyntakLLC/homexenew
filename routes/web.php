@@ -21,17 +21,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class);
 
-Route::get('appointment/get', [AppointmentController::class, 'get'])->name(
-    'appointment.get',
-);
-
-Route::get('call/get', [CallController::class, 'get'])->name('call.get');
-
-Route::get('listing/get', [ListingController::class, 'get'])->name(
-    'listing.get',
-);
-
-Route::get('client/get', [ClientController::class, 'get'])->name('client.get');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('appointment/get', [AppointmentController::class, 'get'])->name(
+        'appointment.get',
+    );
+    Route::get('call/get', [CallController::class, 'get'])->name('call.get');
+    Route::get('listing/get', [ListingController::class, 'get'])->name(
+        'listing.get',
+    );
+    Route::get('client/get', [ClientController::class, 'get'])->name(
+        'client.get',
+    );
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name(
