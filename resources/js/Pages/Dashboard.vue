@@ -310,6 +310,20 @@
             onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
             },
+
+            clickMe() {
+                console.log('ME');
+
+                this.$inertia.post('/api/client/create', {
+                    name: 'Amaan Ali',
+                    phone: '9783878432',
+                    email: 'amaansyedali02@gmail.com',
+                    status: 'Listing',
+                    clientType: 'Listing',
+                    user_name: 'David Tran',
+                    gci: 2,
+                });
+            },
         },
     };
 </script>

@@ -67,9 +67,23 @@ class ClientController extends Controller
         return Redirect::route('client.index');
     }
 
+    public function mobileStore(Request $request)
+    {
+        $client = Client::create([
+            'user_id' => 1,
+            'user_name' => $request->user_name,
+            'name' => $request->name,
+            'phone' => $request->phoneNumber,
+            'email' => $request->email,
+            'status' => $request->status,
+            'client_type' => $request->clientType,
+            'gci' => $request->gci,
+        ]);
+    }
+
     public function get(Request $request)
     {
-        return Client::all();
+        return Client::where('user_name', auth()->user()->name)->get();
     }
 
     public function updateClient(Request $request)

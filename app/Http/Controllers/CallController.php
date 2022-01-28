@@ -10,6 +10,6 @@ class CallController extends Controller
 {
     public function get(Request $request)
     {
-        return Call::all();
+        return Call::where('user_name', auth()->user()->name)->get();
     }
 }

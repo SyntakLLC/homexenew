@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +23,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('appointment/get', [AppointmentController::class, 'get'])->name(
-        'appointment.get',
+    Route::get('api/appointment/get', [
+        ApiController::class,
+        'getApptStats',
+    ])->name('api.appointment.get');
+    Route::get('api/call/get', [ApiController::class, 'getCallStats'])->name(
+        'api.call.get',
     );
-    Route::get('call/get', [CallController::class, 'get'])->name('call.get');
     Route::get('listing/get', [ListingController::class, 'get'])->name(
         'listing.get',
     );
     Route::get('client/get', [ClientController::class, 'get'])->name(
         'client.get',
+    );
+    Route::get('api/chart/get', [ApiController::class, 'getChart'])->name(
+        'api.chart.get',
     );
 });
 

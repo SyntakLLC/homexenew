@@ -33,7 +33,7 @@ class AppointmentController extends Controller
 
     public function get(Request $request)
     {
-        return Appointment::all();
+        return Appointment::where('user_name', auth()->user()->name)->get();
     }
 
     public function submitAppointment(

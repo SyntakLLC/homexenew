@@ -130,7 +130,7 @@ class ListingController extends Controller
 
     public function get(Request $request)
     {
-        return Listing::all();
+        return Listing::where('user_name', auth()->user()->name)->get();
     }
 
     public function updateListing(Request $request)

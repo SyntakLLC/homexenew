@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', [
 ]);
 
 Route::post('/sanctum/token', [HomeController::class, 'authorizeMobile']);
+
+Route::post('/client/create', [ClientController::class, 'mobileStore']);
