@@ -1,7 +1,7 @@
 <template>
     <a
         :href="route('appointment.show', appointment)"
-        class="flex overflow-hidden flex-col flex-grow flex-shrink-0 p-0 m-0 bg-white rounded-md cursor-pointer shadow-sm"
+        class="flex overflow-hidden flex-col flex-grow flex-shrink-0 p-0 m-0 bg-white rounded-border cursor-pointer"
         style="min-height: 242px; min-width: 200px">
         <div
             class="flex overflow-hidden flex-col justify-center items-center w-full px-6 h-32">

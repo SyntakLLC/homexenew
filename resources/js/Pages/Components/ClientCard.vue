@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex relative flex-col w-full text-gray-900 bg-white rounded-lg shadow-sm"
+        class="flex relative flex-col w-full text-gray-900 bg-white rounded-border"
         style="min-height: 179px">
         <!-- Copied Notification -->
         <div
@@ -67,7 +67,7 @@
             <div class="flex flex-col flex-auto">
                 <div
                     class="pt-5 pb-2 text-sm font-semibold leading-5 text-gray-500">
-                    GCI: {{ this.gci }}% • {{ this.clientType }}
+                    GCI: ${{ this.gci }} • {{ this.clientType }}
                 </div>
                 <div class="py-0">
                     <div class="text-2xl font-semibold leading-0 flex flex-col">
@@ -84,7 +84,7 @@
                 <div class="-mt-px flex divide-x divide-gray-200">
                     <div class="w-0 flex-1 flex">
                         <a
-                            class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-2 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg">
+                            class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-2 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg px-4">
                             <MailIcon
                                 class="w-5 h-5 text-gray-400"
                                 aria-hidden="true" />
@@ -95,7 +95,7 @@
                     </div>
                     <div class="-ml-px w-0 flex-1 flex">
                         <a
-                            class="relative w-0 flex-1 inline-flex items-center justify-center py-2 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg">
+                            class="relative w-0 flex-1 inline-flex items-center justify-center py-2 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg px-4">
                             <PhoneIcon
                                 class="w-5 h-5 text-gray-400"
                                 aria-hidden="true" />

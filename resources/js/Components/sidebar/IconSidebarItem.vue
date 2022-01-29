@@ -20,8 +20,9 @@
             ">
             <component
                 :is="item.icon"
-                class="mx-3 flex-shrink-0 h-6 w-6"
+                class="mx-3 flex-shrink-0 h-6 w-6 hidden md:block"
                 aria-hidden="true" />
+            <span class="block md:hidden">{{ item.name }}</span>
         </Link>
 
         <!-- Inertia links do not work with the billing portal -->
@@ -45,8 +46,9 @@
             ">
             <component
                 :is="item.icon"
-                class="mx-3 flex-shrink-0 h-6 w-6"
+                class="mx-3 flex-shrink-0 h-6 w-6 hidden md:block"
                 aria-hidden="true" />
+            <span class="block md:hidden">{{ item.name }}</span>
         </a>
     </div>
 </template>

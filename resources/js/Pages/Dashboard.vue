@@ -1,123 +1,143 @@
 <template>
     <app-layout>
-        <div class="px-4">
-            <div class="mt-12 mb-12 flex-col">
-                <span
-                    class="flex font-semibold text-sm mt-12 text-gray-500 text-center mx-auto uppercase"
-                    >your estimated income</span
-                >
-                <span
-                    class="flex font-semibold text-4xl text-gray-900 text-center mx-auto mt-2"
-                    >${{
-                        numberWithCommas(
-                            this.returnExpectedIncome(0, this.user).toFixed(2),
-                        )
-                    }}</span
-                >
+        <template v-slot:page-header>
+            <div class="sm:flex sm:items-center">
+                <div class="flex-grow pt-2">
+                    <Title class="leading-none sm:truncate">
+                        Estimated Income: ${{
+                            numberWithCommas(
+                                this.chartData[
+                                    this.chartData.length - 1
+                                ].toFixed(2),
+                            )
+                        }}
+                    </Title>
+                    <p class="normal-secondary-text pt-2">
+                        Keep up the progress!
+                    </p>
+                </div>
             </div>
-            <LineChart
-                :datasets="returnChartData()"
-                :labels="returnMonthList()" />
+        </template>
 
-            <div
-                class="flex gap-4 my-8 leading-6 text-gray-900 grid grid-cols-1 sm:grid-cols-2">
-                <DetailCard
-                    title="Conversion rate"
-                    :detail="returnConversionRate() + ' calls per appointment'"
-                    button-text="View appointments"
-                    :button-link="this.route('appointment.index')" />
-                <DetailCard
-                    title="Average daily calls"
-                    :detail="
-                        numberWithCommas(returnDailyCallCount(0).toFixed(2)) +
-                        ' calls'
-                    " />
-                <DetailCard
-                    title="Calls today"
-                    :detail="returnSetOfToday(this.calls) + ' calls today'"
-                    button-text="Review calls"
-                    :button-link="this.route('dashboard')" />
-                <DetailCard
-                    title="Calls this week"
-                    :detail="returnSetOfWeek(this.calls) + ' calls this week'"
-                    button-text="Review calls"
-                    :button-link="this.route('dashboard')" />
-                <DetailCard
-                    title="Calls this month"
-                    :detail="returnSetOfMonth(this.calls) + ' calls this month'"
-                    button-text="Review calls"
-                    :button-link="this.route('dashboard')" />
-                <DetailCard
-                    title="Number of calling days"
-                    :detail="
-                        returnNumberOfSetDays(this.calls) + ' calling days'
-                    "
-                    button-text="Review calls"
-                    :button-link="this.route('dashboard')" />
-                <DetailCard
-                    title="Appointments today"
-                    :detail="
-                        returnSetOfToday(this.appointments) +
-                        ' appointments today'
-                    "
-                    button-text="View appointments"
-                    :button-link="this.route('appointment.index')" />
-                <DetailCard
-                    title="Appointments this week"
-                    :detail="
-                        returnSetOfWeek(this.appointments) +
-                        ' appointments this week'
-                    "
-                    button-text="View appointments"
-                    :button-link="this.route('appointment.index')" />
-                <DetailCard
-                    title="Appointments this month"
-                    :detail="
-                        returnSetOfMonth(this.appointments) +
-                        ' appointments this month'
-                    "
-                    button-text="View appointments"
-                    :button-link="this.route('appointment.index')" />
-                <DetailCard
-                    title="Signed"
-                    :detail="returnNumberOfSignedContracts() + ' signed'" />
-            </div>
-        </div>
+        <template v-slot:default>
+            <responsive-two-column-layout>
+                <template v-slot:main-column>
+                    <div class="rounded-border p-8">
+                        <LineChart
+                            :datasets="[
+                                {
+                                    backgroundColor: '#1470C4',
+                                    data: this.chartData,
+                                },
+                            ]"
+                            :labels="returnMonthList()" />
+                    </div>
+
+                    <div
+                        class="flex gap-4 my-8 leading-6 text-gray-900 grid grid-cols-1 sm:grid-cols-2">
+                        <DetailCard
+                            title="Calls today"
+                            :detail="this.call_num_of_today + ' calls today'" />
+                        <DetailCard
+                            title="Calls this week"
+                            :detail="
+                                this.call_num_of_week + ' calls this week'
+                            " />
+                        <DetailCard
+                            title="Calls this month"
+                            :detail="
+                                this.call_num_of_month + ' calls this month'
+                            " />
+                        <DetailCard
+                            title="Number of calling days"
+                            :detail="
+                                returnNumberOfSetDays(this.calls) +
+                                ' calling days'
+                            " />
+                        <DetailCard
+                            title="Appointments today"
+                            :detail="
+                                this.appt_num_of_today + ' appointments today'
+                            " />
+                        <DetailCard
+                            title="Appointments this week"
+                            :detail="
+                                this.appt_num_of_week +
+                                ' appointments this week'
+                            " />
+                        <DetailCard
+                            title="Appointments this month"
+                            :detail="
+                                this.appt_num_of_month +
+                                ' appointments this month'
+                            " />
+                        <DetailCard
+                            title="Signed"
+                            :detail="
+                                returnNumberOfSignedContracts() + ' signed'
+                            " />
+                    </div>
+                </template>
+
+                <template v-slot:secondary-column>
+                    <div
+                        class="flex gap-4 mb-4 leading-6 text-gray-900 grid grid-cols-1">
+                        <DetailCard
+                            title="Conversion rate"
+                            :detail="
+                                returnConversionRate() +
+                                ' calls per appointment'
+                            "
+                            button-text="View transactions"
+                            :button-link="this.route('client.index')" />
+                        <DetailCard
+                            title="Average daily calls"
+                            :detail="
+                                numberWithCommas(
+                                    returnDailyCallCount(0).toFixed(2),
+                                ) + ' calls'
+                            "
+                            button-text="View listings"
+                            :button-link="this.route('listing.index')" />
+                    </div>
+                </template>
+            </responsive-two-column-layout>
+        </template>
     </app-layout>
 </template>
 
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue';
     import LineChart from './LineChart';
-    import moment from 'moment';
     import DetailCard from './Components/DetailCard.vue';
+    import Title from '@/Components/Title.vue';
+    import ResponsiveTwoColumnLayout from '@/Components/ResponsiveTwoColumnLayout.vue';
+    import moment from 'moment';
 
     export default {
         components: {
-            DetailCard,
-            LineChart,
             AppLayout,
+            LineChart,
+            DetailCard,
+            Title,
+            ResponsiveTwoColumnLayout,
         },
 
-        props: ['propCalls', 'propAppts', 'users', 'user'],
-        // {
-        //     calls: {
-        //         default: [],
-        //         type: Array,
-        //     },
-        //     appointments: {
-        //         default: [],
-        //         type: Array,
-        //     },
-        //     users: {
-        //         default: [],
-        //         type: Array,
-        //     },
-        //     user: {
-        //         default: {},
-        //         type: Object,
-        //     },
-        // },
+        props: [
+            'propCalls',
+            'propAppts',
+            'chartData',
+            'users',
+            'user',
+            'call_total_num',
+            'call_num_of_today',
+            'call_num_of_week',
+            'call_num_of_month',
+            'appt_total_num',
+            'appt_num_of_today',
+            'appt_num_of_week',
+            'appt_num_of_month',
+        ],
 
         data() {
             return {
@@ -145,77 +165,6 @@
                 ).length;
             },
 
-            // gives THIS USER'S the number of X made today
-            returnSetOfToday(set) {
-                return set.filter((item) => {
-                    return this.wasToday(item);
-                }).length;
-            },
-            // gives THIS USER'S the number of X made today
-            returnSetOfWeek(set) {
-                return set.filter((item) => {
-                    return this.wasWeek(item);
-                }).length;
-            },
-            // gives THIS USER'S the number of X made today
-            returnSetOfMonth(set) {
-                return set.filter((item) => {
-                    return this.wasMonth(item);
-                }).length;
-            },
-
-            wasToday(item) {
-                return moment(item.created_at).isSame(moment(), 'day');
-            },
-
-            wasWeek(item) {
-                return moment(item.created_at).isSame(moment(), 'week');
-            },
-
-            wasMonth(item) {
-                return moment(item.created_at).isSame(moment(), 'month');
-            },
-
-            // returns an array of chart data
-            returnChartData() {
-                var array = [];
-                let color = '#1470C450';
-                array = array.concat({
-                    // label: this.users[i].name,
-                    // fill: false,
-                    // lineTension: 0,
-                    backgroundColor: color,
-                    data: [
-                        this.returnExpectedIncome(11, this.user),
-                        this.returnExpectedIncome(10, this.user),
-                        this.returnExpectedIncome(9, this.user),
-                        this.returnExpectedIncome(8, this.user),
-                        this.returnExpectedIncome(7, this.user),
-                        this.returnExpectedIncome(6, this.user),
-                        this.returnExpectedIncome(5, this.user),
-                        this.returnExpectedIncome(4, this.user),
-                        this.returnExpectedIncome(3, this.user),
-                        this.returnExpectedIncome(2, this.user),
-                        this.returnExpectedIncome(1, this.user),
-                        this.returnExpectedIncome(0, this.user),
-                    ],
-                });
-                return array;
-            },
-
-            // to draw the chart, we want to show the change in expected income over time.
-            // so, we need to, for each month, show the expected income based on the prior months.
-            returnExpectedIncome(month, user) {
-                let expectedIncomeBasedOnCalls =
-                    ((this.returnDailyCallCount(month, user) * 260) / 900) *
-                    5000;
-                let expectedIncomeBasedOnAppts =
-                    ((this.returnDailyApptCount(month, user) * 52) / 10) * 5000;
-                let expectedIncome =
-                    expectedIncomeBasedOnCalls + expectedIncomeBasedOnAppts;
-                return expectedIncome <= 0 ? 0 : expectedIncome;
-            },
-
             // calculates the user's average daily call count
             returnDailyCallCount(month, user) {
                 let now = moment().subtract(month, 'months');
@@ -233,24 +182,6 @@
                     return Math.abs(this.calls.length / num_of_days);
                 }
             },
-
-            // calculates the user's average daily appointment count
-            returnDailyApptCount(month, user) {
-                let now = moment().subtract(month, 'months');
-                let your_date = moment('2021-10-05');
-                let num_of_days = now.diff(your_date, 'days') + 1;
-
-                try {
-                    return Math.abs(
-                        this.appointments.filter((appt) => {
-                            return moment(appt.created_at).isBefore(now);
-                        }).length / num_of_days,
-                    );
-                } catch {
-                    return Math.abs(this.appointments.length / num_of_days);
-                }
-            },
-
             // shifts the month list so the current month is first
             returnMonthList() {
                 var months = [
@@ -309,20 +240,6 @@
 
             onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
-            },
-
-            clickMe() {
-                console.log('ME');
-
-                this.$inertia.post('/api/client/create', {
-                    name: 'Amaan Ali',
-                    phone: '9783878432',
-                    email: 'amaansyedali02@gmail.com',
-                    status: 'Listing',
-                    clientType: 'Listing',
-                    user_name: 'David Tran',
-                    gci: 2,
-                });
             },
         },
     };

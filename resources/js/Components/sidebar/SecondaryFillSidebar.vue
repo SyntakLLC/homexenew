@@ -83,11 +83,7 @@
                     src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
                     alt="Workflow"
                 /> -->
-                <p
-                    class="h-8 font-medium"
-                    style="font-size: 1.6875rem; line-height: 2.125rem">
-                    <slot name="app-title" />
-                </p>
+                <logo />
             </div>
             <!-- Sidebar component, swap this element with another sidebar if you like -->
             <div class="h-0 flex-1 flex flex-col overflow-y-auto">
@@ -121,6 +117,7 @@
     import { XIcon } from '@heroicons/vue/outline';
     import UserIconWithMenu from '@/Components/UserIconWithMenu.vue';
     import SecondaryFillSidebarItem from '@/Components/sidebar/SecondaryFillSidebarItem.vue';
+    import Logo from '@/Components/Logo.vue';
     import { Link } from '@inertiajs/inertia-vue3';
 
     export default {
@@ -137,6 +134,7 @@
             Title,
             UserIconWithMenu,
             SecondaryFillSidebarItem,
+            Logo,
             Link,
         },
         props: ['navigation', 'sidebarOpen'],

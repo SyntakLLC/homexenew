@@ -29,6 +29,22 @@ class User extends Authenticatable
     protected $fillable = ['name', 'email', 'password'];
 
     /**
+     * Get the originals associated with this User.
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * Get the originals associated with this User.
+     */
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array

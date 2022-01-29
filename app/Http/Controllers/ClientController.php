@@ -12,7 +12,10 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Clients/Index', [
-            'clients' => Client::all(),
+            'clients' => Client::where('user_name', auth()->user()->name)
+                ->get()
+                ->sortByDesc('created_at')
+                ->values(),
         ]);
     }
 

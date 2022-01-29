@@ -180,7 +180,7 @@
                 } else {
                     switch (this.color) {
                         case 'primary':
-                            return 'text-white bg-brand-600 hover:bg-brand-700 border-transparent shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-100 focus:ring-brand-500';
+                            return 'text-white bg-brand-400 hover:bg-brand-500 border-transparent shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-100 focus:ring-brand-400';
                         case 'secondary':
                             return 'text-brand-800 bg-brand-100 hover:bg-brand-200 border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-50 focus:ring-brand-700';
                         case 'white':

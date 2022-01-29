@@ -43,6 +43,14 @@ class Appointment extends Model
         'points_left',
     ];
 
+    /**
+     * Get the originals associated with this User.
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'uuid';

@@ -9,7 +9,7 @@
                     :src="
                         'https://ui-avatars.com/api/?name=' +
                         $page.props.user.name.replace(' ', '+') +
-                        '&color=eaf9f0&background=24b080'
+                        '&color=eaf1f9&background=1470C4'
                     "
                     :alt="$page.props.user.name" />
             </MenuButton>

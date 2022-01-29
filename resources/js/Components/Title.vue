@@ -1,6 +1,6 @@
 <template>
     <p
-        class="h-8 font-medium"
+        class="h-8 font-semibold"
         style="font-size: 1.6875rem; line-height: 2.125rem">
         <span v-if="value">{{ value }}</span>
         <span v-else><slot></slot></span>

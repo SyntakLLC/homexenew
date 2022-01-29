@@ -1,29 +1,22 @@
 <template>
     <div class="max-h-screen flex items-stretch overflow-hidden">
-        <sidebar
+        <!--         <sidebar
             :navigation="navigation"
             :sidebarOpen="sidebarOpen"
             appTitle="Notably">
-        </sidebar>
+        </sidebar> -->
 
         <!--         <secondary-fill-sidebar
             :navigation="navigation"
             :sidebarOpen="sidebarOpen"
             appTitle="Notably">
-            <template v-slot:app-title>
-                <span
-                    class="underline decoration-4 decoration-brand-400 underline-offset-4"
-                    >Notedl</span
-                >y
-            </template>
         </secondary-fill-sidebar> -->
 
-        <!--         <icon-only-sidebar
+        <icon-only-sidebar
             :navigation="navigation"
             :sidebarOpen="sidebarOpen"
             appTitle="Notably">
-            <template v-slot:app-title> Notedly </template>
-        </icon-only-sidebar> -->
+        </icon-only-sidebar>
 
         <!-- Stage -->
         <div

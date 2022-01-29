@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex relative flex-col w-full text-gray-900 bg-white rounded-lg shadow-sm"
+        class="flex relative flex-col w-full text-gray-900 bg-white rounded-border"
         style="min-height: 179px">
         <div class="flex flex-col flex-auto">
             <div
@@ -18,10 +18,10 @@
                             class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium"
                             :class="
                                 this.status == 'Sold'
-                                    ? 'bg-green-100 text-green-500'
+                                    ? 'bg-green-50 text-green-500'
                                     : this.status == 'Pending'
-                                    ? 'bg-yellow-100 text-yellow-500'
-                                    : 'bg-red-100 text-red-500'
+                                    ? 'bg-yellow-50 text-yellow-500'
+                                    : 'bg-red-50 text-red-500'
                             ">
                             {{ this.status }}
                         </span>

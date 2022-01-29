@@ -12,7 +12,13 @@ class AppointmentController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Appointments/Index', [
-            'appointments' => Appointment::all(),
+            'appointments' => Appointment::where(
+                'user_name',
+                auth()->user()->name,
+            )
+                ->get()
+                ->sortByDesc('created_at')
+                ->values(),
             'leads' => $this->fubApiCall('people')->people,
         ]);
     }

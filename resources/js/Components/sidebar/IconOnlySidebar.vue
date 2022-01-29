@@ -46,16 +46,7 @@
                                 </button>
                             </div>
                         </TransitionChild>
-                        <div class="flex-shrink-0 flex items-center px-4">
-                            <!--                             <img
-                                class="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-                                alt="Workflow"
-                            /> -->
-                            <!--                             <Title class="leading-none sm:truncate mb-5">
-                                Notedly
-                            </Title> -->
-                        </div>
+                        <div class="flex-shrink-0 flex items-center px-4"></div>
                         <div class="flex-1 h-0 overflow-y-auto">
                             <nav class="px-2">
                                 <div class="space-y-1">
@@ -76,16 +67,9 @@
 
         <!-- Static sidebar for desktop -->
         <div
-            class="hidden overflow-hidden flex-shrink-0 md:flex md:flex-col md:w-20 md:border-r-2 md:border-gray-100 md:pt-5 md:pb-4 min-h-screen">
-            <div class="pt-7 flex items-center flex-shrink-0">
-                <p
-                    class="h-8 font-medium text-center w-full"
-                    style="font-size: 1.6875rem; line-height: 2.125rem">
-                    <span
-                        class="p-3 py-1.5 bg-brand-400 rounded-full text-white">
-                        {{ appTitle.charAt(0) }}
-                    </span>
-                </p>
+            class="hidden overflow-hidden flex-shrink-0 md:flex md:flex-col md:w-20 md:border-r-2 md:border-gray-100 md:pt-5 md:pb-4 min-h-screen bg-brand-0">
+            <div class="pt-7 flex items-center justify-center flex-shrink-0">
+                <logo class="w-1/2 h-1/2" />
             </div>
             <!-- Sidebar component, swap this element with another sidebar if you like -->
             <div class="h-0 flex-1 flex flex-col overflow-y-auto">
@@ -96,6 +80,15 @@
                             v-for="item in navigation"
                             :key="item.name"
                             :item="item" />
+
+                        <a
+                            @click="this.$inertia.post(route('logout'))"
+                            class="cursor-pointer icon-only-sidebar-item-inactive-text group icon-only-sidebar-item-text-styling">
+                            <LogoutIcon
+                                class="mx-3 flex-shrink-0 h-6 w-6 hidden md:block"
+                                aria-hidden="true" />
+                            <span class="block md:hidden">Logout</span>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -116,9 +109,10 @@
         TransitionChild,
         TransitionRoot,
     } from '@headlessui/vue';
-    import { XIcon } from '@heroicons/vue/outline';
+    import { XIcon, LogoutIcon } from '@heroicons/vue/outline';
     import UserIconWithMenu from '@/Components/UserIconWithMenu.vue';
     import IconSidebarItem from '@/Components/sidebar/IconSidebarItem.vue';
+    import Logo from '@/Components/Logo.vue';
     import { Link } from '@inertiajs/inertia-vue3';
 
     export default {
@@ -135,6 +129,8 @@
             Title,
             UserIconWithMenu,
             IconSidebarItem,
+            Logo,
+            LogoutIcon,
             Link,
         },
         props: ['navigation', 'sidebarOpen', 'appTitle'],

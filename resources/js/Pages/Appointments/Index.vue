@@ -1,16 +1,16 @@
 <template>
     <app-layout>
-        <div class="px-4 pt-12 pb-12 leading-6 text-gray-900">
-            <div class="md:flex md:items-center md:justify-between">
-                <div class="flex-1 min-w-0">
-                    <h2
-                        class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+        <template v-slot:page-header>
+            <div class="sm:flex sm:items-center">
+                <div class="flex-grow pt-2">
+                    <Title class="leading-none sm:truncate">
                         Appointments
-                    </h2>
+                    </Title>
                 </div>
-                <div class="mt-4 flex md:mt-0 md:ml-4"></div>
             </div>
+        </template>
 
+        <template v-slot:default>
             <div
                 class="grid gap-5 w-full text-gray-900"
                 style="
@@ -21,7 +21,7 @@
                     );
                 ">
                 <div
-                    class="flex gap-4 my-8 leading-6 text-gray-900 grid grid-cols-1 sm:grid-cols-2">
+                    class="flex gap-4 leading-6 text-gray-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     <div
                         v-for="appointment in this.appointments"
                         :key="appointment.uuid">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
     </app-layout>
 </template>
 
@@ -39,9 +39,16 @@
     import AppLayout from '../../Layouts/AppLayout';
     import moment from 'moment';
     import DealCard from '../Components/DealCard';
+    import Title from '@/Components/Title';
     export default {
         name: 'Index',
-        components: { DealCard, AppLayout },
+
+        components: {
+            DealCard,
+            AppLayout,
+            Title,
+        },
+
         props: ['appointments', 'leads'],
     };
 </script>
