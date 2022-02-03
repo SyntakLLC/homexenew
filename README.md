@@ -18,7 +18,7 @@ Homexe Win is a software I designed for the Homexe Realty team at Cameron Presti
 
 Homexe Win displays this data as a trackable chart, allowing agents to monitor their progress.
 
-<img style="border-radius: 0.75rem" src="https://i.imgur.com/DNv1aLT.png" alt="Homexe's Dashboard" />
+<img style="border-radius: 20px" src="https://i.imgur.com/DNv1aLT.png" alt="Homexe's Dashboard" />
 
 ## How Does it Work?
 
