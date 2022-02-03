@@ -18,6 +18,8 @@ Homexe Win is a software I designed for the Homexe Realty team at Cameron Presti
 
 Homexe Win displays this data as a trackable chart, allowing agents to monitor their progress.
 
+<img style="border-radius: 0.75rem" src="https://i.imgur.com/DNv1aLT.png" alt="Homexe's Dashboard" />
+
 ## How Does it Work?
 
 How do we track an agent's calls and appointments? As of right now, Homexe Win is built exclusively for the team at Homexe. This team uses the FollowUpBoss CRM to track agent activity, and we simply use their REST API to monitor that data ourselves.
