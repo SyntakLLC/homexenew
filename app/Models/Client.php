@@ -38,6 +38,10 @@ class Client extends Model
         'status',
         'client_type',
         'gci',
+        'sales_price',
+        'address',
+        'closing_date',
+        'capped',
     ];
 
     public function getRouteKeyName()

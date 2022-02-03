@@ -38,20 +38,36 @@ class ClientController extends Controller
         return Inertia::render('Clients/Create');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Client $client)
     {
-        $client = Client::find($request->clientId);
-
         $client->name = $request->name;
-        $client->phone = $request->phone;
+        $client->phone = $request->phoneNumber;
         $client->email = $request->email;
         $client->status = $request->status;
         $client->client_type = $request->clientType;
+        $client->sales_price = $request->salesPrice;
+        $client->address = $request->address;
+        $client->closing_date = $request->closingDate;
+        $client->capped = $request->capped;
         $client->gci = $request->gci;
-
         $client->save();
+    }
 
-        return Redirect::route('client.index');
+    public function mobileUpdate(Request $request)
+    {
+        $client = Client::find($request->clientId);
+        $client->name = $request->name;
+        $client->phone = $request->phoneNumber;
+        $client->email = $request->email;
+        $client->status = $request->status;
+        $client->client_type = $request->clientType;
+        $client->sales_price = $request->salesPrice;
+        $client->address = $request->address;
+        $client->closing_date = $request->closingDate;
+        $client->capped = $request->capped;
+        $client->gci = $request->gci;
+        //
+        $client->save();
     }
 
     public function store(Request $request)
@@ -80,13 +96,21 @@ class ClientController extends Controller
             'email' => $request->email,
             'status' => $request->status,
             'client_type' => $request->clientType,
+            'sales_price' => $request->salesPrice,
+            'address' => $request->address,
+            'closing_date' => $request->closingDate,
+            'capped' => $request->capped,
             'gci' => $request->gci,
         ]);
     }
 
     public function get(Request $request)
     {
-        return Client::where('user_name', auth()->user()->name)->get();
+        if (auth()->user()->admin) {
+            return Client::all();
+        } else {
+            return Client::where('user_name', auth()->user()->name)->get();
+        }
     }
 
     public function updateClient(Request $request)

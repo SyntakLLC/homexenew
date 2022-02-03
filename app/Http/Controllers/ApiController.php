@@ -116,6 +116,10 @@ class ApiController extends Controller
         $num_of_days = round($datediff / (60 * 60 * 24));
         $num_of_days == 0 ? ($num_of_days = 10) : ($num_of_days = $num_of_days);
 
+        if (date('Y-m', $now) == date('Y-m', strtotime('2021-12-28'))) {
+            return $num_of_model / 30;
+        }
+
         return $num_of_model / $num_of_days;
     }
 }

@@ -41,6 +41,15 @@
                             :button-link="this.route('client.edit', client)" />
                     </div>
                 </div>
+
+                <!--                 <button
+                    @click="
+                        this.$inertia.get('/goal/update', {
+                            goal: 200000,
+                        })
+                    ">
+                    Click
+                </button> -->
             </div>
         </template>
     </app-layout>

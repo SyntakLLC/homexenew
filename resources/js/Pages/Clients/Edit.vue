@@ -24,10 +24,7 @@
                         </div>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
-                        <form
-                            @submit.prevent="
-                                updateClientForm.post('/update-client')
-                            ">
+                        <form @submit.prevent="submit">
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">
@@ -53,7 +50,9 @@
                                                 Phone
                                             </label>
                                             <input
-                                                v-model="updateClientForm.phone"
+                                                v-model="
+                                                    updateClientForm.phoneNumber
+                                                "
                                                 type="text"
                                                 name="phone"
                                                 id="phone"
@@ -168,13 +167,31 @@
                 updateClientForm: this.$inertia.form({
                     clientId: this.client.uuid,
                     name: this.client.name,
-                    phone: this.client.phone,
+                    phoneNumber: this.client.phone,
                     email: this.client.email,
                     status: this.client.status,
                     clientType: this.client.client_type,
+                    salesPrice: this.client.sales_price,
+                    address: this.client.address,
+                    closingDate: this.client.closing_date,
+                    capped: this.client.capped,
                     gci: this.client.gci,
                 }),
             };
+        },
+
+        methods: {
+            submit() {
+                this.updateClientForm.put(
+                    this.route('client.update', this.client),
+                );
+            },
+            // altSubmit() {
+            //     console.log(this.client);
+            //     this.$inertia.put(this.route('client.update', this.client), {
+            //         name: 'JJ',
+            //     });
+            // },
         },
     };
 </script>

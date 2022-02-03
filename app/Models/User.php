@@ -26,7 +26,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'goal'];
 
     /**
      * Get the originals associated with this User.

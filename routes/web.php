@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\CallController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -39,6 +39,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('api/chart/get', [ApiController::class, 'getChart'])->name(
         'api.chart.get',
     );
+    Route::get('api/goal/get', [UserController::class, 'getGoal'])->name(
+        'api.goal.get',
+    );
+    Route::get('/goal/update', [UserController::class, 'mobileGoalUpdate']);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -59,6 +63,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post(
         'update-client',
-        'App\Http\Controllers\ClientController@updateClient',
+        'App\Http\Controllers\ClientController@update',
     );
 });
