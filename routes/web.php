@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('listing', ListingController::class);
 
     Route::resource('client', ClientController::class);
+
+    Route::resource('blog', BlogController::class);
 
     Route::post(
         'update-listing',

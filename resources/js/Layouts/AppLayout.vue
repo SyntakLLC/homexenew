@@ -46,13 +46,13 @@
             current: 'client.index',
             altCurrent: 'client.index',
         },
-        {
-            name: 'Settings',
-            href: 'profile.show',
-            icon: CogIcon,
-            current: 'profile.show',
-            altCurrent: 'profile.show',
-        },
+        // {
+        //     name: 'Settings',
+        //     href: 'profile.show',
+        //     icon: CogIcon,
+        //     current: 'profile.show',
+        //     altCurrent: 'profile.show',
+        // },
     ];
 
     export default {

@@ -76,6 +76,25 @@
                 <!-- Navigation -->
                 <nav class="mt-8">
                     <div class="space-y-8">
+                        <Link
+                            :href="route('profile.show')"
+                            :class="[
+                                route().current('profile.show')
+                                    ? 'icon-only-sidebar-item-active-text'
+                                    : 'icon-only-sidebar-item-inactive-text',
+                                'group icon-only-sidebar-item-text-styling',
+                            ]">
+                            <img
+                                class="h-8 w-8 rounded-full ml-2"
+                                :src="
+                                    'https://ui-avatars.com/api/?name=' +
+                                    $page.props.user.name.replace(' ', '+') +
+                                    '&color=eaf1f9&background=1470C4'
+                                "
+                                :alt="$page.props.user.name" />
+                            <span class="block md:hidden">User Menu</span>
+                        </Link>
+
                         <icon-sidebar-item
                             v-for="item in navigation"
                             :key="item.name"
