@@ -4,122 +4,148 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Call;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Traits\GetIncomeAtTime;
 
 class ApiController extends Controller
 {
+    use GetIncomeAtTime;
+
+    /**
+     * Returns an array of expected income chart values.
+     *
+     * @param $request
+     * @return array
+     */
     public function getChart(Request $request)
     {
-        $now = time(); // or your date as well
+        $users = User::all();
+        $array = [];
 
-        return [
-            $this->getIncomeAtThisTime(strtotime('-11 month')),
-            $this->getIncomeAtThisTime(strtotime('-10 month')),
-            $this->getIncomeAtThisTime(strtotime('-9 month')),
-            $this->getIncomeAtThisTime(strtotime('-8 month')),
-            $this->getIncomeAtThisTime(strtotime('-7 month')),
-            $this->getIncomeAtThisTime(strtotime('-6 month')),
-            $this->getIncomeAtThisTime(strtotime('-5 month')),
-            $this->getIncomeAtThisTime(strtotime('-4 month')),
-            $this->getIncomeAtThisTime(strtotime('-3 month')),
-            $this->getIncomeAtThisTime(strtotime('-2 month')),
-            $this->getIncomeAtThisTime(strtotime('-1 month')),
-            $this->getIncomeAtThisTime($now),
-        ];
+        foreach ($users as &$user) {
+            $to_add = [
+                $this->getIncomeAtThisTime(strtotime('-11 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-10 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-9 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-8 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-7 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-6 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-5 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-4 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-3 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-2 month'), $user->name),
+                $this->getIncomeAtThisTime(strtotime('-1 month'), $user->name),
+                $this->getIncomeAtThisTime(time(), $user->name),
+            ];
+            $array = [...$array, $user->name => $to_add];
+        }
+
+        return $array;
     }
 
+    /**
+     * Returns an array of call statistics where:
+     * - day     -> number of calls made today
+     * - week    -> number of calls made this week
+     * - month   -> number of calls made this month
+     * - average -> average number of calls made daily
+     *
+     * @param $request
+     * @return array
+     */
     public function getCallStats(Request $request)
     {
+        $users = User::all();
+        $array = [];
+
         \Carbon\Carbon::setWeekStartsAt(\Carbon\Carbon::SUNDAY);
         \Carbon\Carbon::setWeekEndsAt(\Carbon\Carbon::SATURDAY);
 
-        $total_num = Call::where('user_name', auth()->user()->name)->count();
+        foreach ($users as &$user) {
+            $total_num = Call::where('user_name', $user->name)->count();
 
-        $num_of_today = Call::whereDate(
-            'created_at',
-            \Carbon\Carbon::today(),
-        )->count();
-        $num_of_week = Call::whereDate('created_at', [
-            \Carbon\Carbon::now()->startOfWeek(),
-            \Carbon\Carbon::now()->endOfWeek(),
-        ])->count();
-        $num_of_month = Call::whereDate('created_at', [
-            \Carbon\Carbon::now()->startOfMonth(),
-            \Carbon\Carbon::now()->endOfMonth(),
-        ])->count();
+            $num_of_today = Call::where('user_name', $user->name)
+                ->whereDate('created_at', \Carbon\Carbon::today())
+                ->count();
+            $num_of_week = Call::where('user_name', $user->name)
+                ->whereDate('created_at', [
+                    \Carbon\Carbon::now()->startOfWeek(),
+                    \Carbon\Carbon::now()->endOfWeek(),
+                ])
+                ->count();
+            $num_of_month = Call::where('user_name', $user->name)
+                ->whereDate('created_at', [
+                    \Carbon\Carbon::now()->startOfMonth(),
+                    \Carbon\Carbon::now()->endOfMonth(),
+                ])
+                ->count();
 
-        return [
-            'day' => $num_of_today,
-            'week' => $num_of_week,
-            'month' => $num_of_month,
-            'average' => $this->getAverageNumber(time(), $total_num),
-        ];
+            $to_add = [
+                'day' => $num_of_today,
+                'week' => $num_of_week,
+                'month' => $num_of_month,
+                'average' => $this->getAverageNumber(time(), $total_num),
+            ];
+
+            $array = [...$array, $user->name => $to_add];
+        }
+
+        return $array;
     }
 
+    /**
+     * Returns an array of appointment statistics where:
+     * - day             -> number of appointments made today
+     * - week            -> number of appointments made this week
+     * - month           -> number of appointments made this month
+     * - conversion_rate -> the ratio of calls to appointments
+     *
+     * @param $request
+     * @return array
+     */
     public function getApptStats(Request $request)
     {
         \Carbon\Carbon::setWeekStartsAt(\Carbon\Carbon::SUNDAY);
         \Carbon\Carbon::setWeekEndsAt(\Carbon\Carbon::SATURDAY);
 
-        $total_num = Appointment::where(
-            'user_name',
-            auth()->user()->name,
-        )->count();
-        $num_of_calls = Call::where('user_name', auth()->user()->name)->count();
+        $users = User::all();
+        $array = [];
 
-        $num_of_today = Appointment::whereDate(
-            'created_at',
-            \Carbon\Carbon::today(),
-        )->count();
-        $num_of_week = Appointment::whereDate('created_at', [
-            \Carbon\Carbon::now()->startOfWeek(),
-            \Carbon\Carbon::now()->endOfWeek(),
-        ])->count();
-        $num_of_month = Appointment::whereDate('created_at', [
-            \Carbon\Carbon::now()->startOfMonth(),
-            \Carbon\Carbon::now()->endOfMonth(),
-        ])->count();
+        \Carbon\Carbon::setWeekStartsAt(\Carbon\Carbon::SUNDAY);
+        \Carbon\Carbon::setWeekEndsAt(\Carbon\Carbon::SATURDAY);
 
-        return [
-            'day' => $num_of_today,
-            'week' => $num_of_week,
-            'month' => $num_of_month,
-            'conversion_rate' =>
-                $total_num == 0 ? 0 : $num_of_calls / $total_num,
-        ];
-    }
+        foreach ($users as &$user) {
+            $total_num = Appointment::where('user_name', $user->name)->count();
+            $num_of_calls = Call::where('user_name', $user->name)->count();
 
-    protected function getIncomeAtThisTime($now)
-    {
-        $num_of_calls = Call::where('user_name', auth()->user()->name)->count();
-        $num_of_appts = Appointment::where(
-            'user_name',
-            auth()->user()->name,
-        )->count();
+            $num_of_today = Appointment::where('user_name', $user->name)
+                ->whereDate('created_at', \Carbon\Carbon::today())
+                ->count();
+            $num_of_week = Appointment::where('user_name', $user->name)
+                ->whereDate('created_at', [
+                    \Carbon\Carbon::now()->startOfWeek(),
+                    \Carbon\Carbon::now()->endOfWeek(),
+                ])
+                ->count();
+            $num_of_month = Appointment::where('user_name', $user->name)
+                ->whereDate('created_at', [
+                    \Carbon\Carbon::now()->startOfMonth(),
+                    \Carbon\Carbon::now()->endOfMonth(),
+                ])
+                ->count();
 
-        $average_calls = $this->getAverageNumber($now, $num_of_calls);
-        $average_appts = $this->getAverageNumber($now, $num_of_appts);
+            $to_add = [
+                'day' => $num_of_today,
+                'week' => $num_of_week,
+                'month' => $num_of_month,
+                'conversion_rate' =>
+                    $total_num == 0 ? 0 : $num_of_calls / $total_num,
+            ];
 
-        $expected_income =
-            (($average_calls * 260) / 900) * 5000 +
-            (($average_appts * 52) / 10) * 5000;
-
-        return $expected_income < 0 ? 0 : $expected_income;
-    }
-
-    protected function getAverageNumber($now, $num_of_model)
-    {
-        $your_date = strtotime('2021-11-28');
-        $datediff = $now - $your_date;
-
-        $num_of_days = round($datediff / (60 * 60 * 24));
-        $num_of_days == 0 ? ($num_of_days = 10) : ($num_of_days = $num_of_days);
-
-        if (date('Y-m', $now) == date('Y-m', strtotime('2021-12-28'))) {
-            return $num_of_model / 30;
+            $array = [...$array, $user->name => $to_add];
         }
-
-        return $num_of_model / $num_of_days;
+        return $array;
     }
 }

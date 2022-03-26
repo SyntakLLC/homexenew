@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 /*
@@ -22,8 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', [
 ]);
 
 Route::post('/sanctum/token', [HomeController::class, 'authorizeMobile']);
-
-Route::post('/blog/create', [BlogController::class, 'asyncStore']);
 
 Route::post('/client/create', [ClientController::class, 'mobileStore']);
 Route::put('/client/update', [ClientController::class, 'mobileUpdate']);

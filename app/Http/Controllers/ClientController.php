@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -106,11 +107,15 @@ class ClientController extends Controller
 
     public function get(Request $request)
     {
-        if (auth()->user()->admin) {
-            return Client::all();
-        } else {
-            return Client::where('user_name', auth()->user()->name)->get();
+        $users = User::all();
+        $array = [];
+
+        foreach ($users as &$user) {
+            $to_add = Client::where('user_name', $user->name)->get();
+            $array = [...$array, $user->name => $to_add];
         }
+
+        return $array;
     }
 
     public function updateClient(Request $request)

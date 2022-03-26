@@ -12,7 +12,7 @@ environments:
     production:
         memory: 1024
         cli-memory: 512
-        runtime: 'php-8.0:al2'
+        runtime: 'php-8.1:al2'
         domain: homexe.win
         database: homexe-production
         build:

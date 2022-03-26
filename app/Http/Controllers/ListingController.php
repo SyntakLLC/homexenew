@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Listing\StoreListingRequest;
 use App\Models\Listing;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -130,7 +131,15 @@ class ListingController extends Controller
 
     public function get(Request $request)
     {
-        return Listing::where('user_name', auth()->user()->name)->get();
+        $users = User::all();
+        $array = [];
+
+        foreach ($users as &$user) {
+            $to_add = Listing::where('user_name', auth()->user()->name)->get();
+            $array = [...$array, $user->name => $to_add];
+        }
+
+        return $array;
     }
 
     public function updateListing(Request $request)

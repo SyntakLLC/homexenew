@@ -29,15 +29,23 @@ class User extends Authenticatable
     protected $fillable = ['name', 'email', 'password', 'goal'];
 
     /**
-     * Get the originals associated with this User.
+     * Get the appointments associated with this User.
      */
-    public function appointments()
+    public function appts()
     {
-        return $this->hasMany(Appointment::class);
+        return Appointment::all()->where('user_name', $this->name);
     }
 
     /**
-     * Get the originals associated with this User.
+     * Get the appointments associated with this User.
+     */
+    public function calls()
+    {
+        return Call::all()->where('user_name', $this->name);
+    }
+
+    /**
+     * Get the clients associated with this User.
      */
     public function clients()
     {
